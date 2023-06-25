@@ -1,0 +1,22 @@
+.btn_type_submit-delete {
+    width: 100%;
+    margin: 0;
+    padding: 16px 0 14px;
+    border: none;
+    justify-self: end;
+    transition: opacity 0.4s linear;
+    background-color: #000;
+    color: #fff;
+}
+
+.btn_type_submit-delete:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+@media (max-width: 767px) {
+    .btn_type_submit-delete {
+        font-size: 14px;
+        line-height: 17px;
+    }
+}

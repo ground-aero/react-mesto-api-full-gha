@@ -1,0 +1,22 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+ToDo.txt
+/Yandex-Sprint-13.postman_collection.json
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directory
+node_modules
+
+# Optional npm cache directory
+.npm
+
+# Optional environmental variable (confidential)
+.env
+
+# IDE
+.idea
+.vscode
+*.sublime*

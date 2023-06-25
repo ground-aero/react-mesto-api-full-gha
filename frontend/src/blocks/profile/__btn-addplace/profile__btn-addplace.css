@@ -1,0 +1,25 @@
+.profile__btn-addplace {
+  flex-basis: 150px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: 50px;
+  margin-left: auto;
+  border: 2px solid #fff;
+  border-radius: 2px;
+  background-image: url(../../../images/add-button.svg);
+}
+
+.profile__btn-addplace:hover {
+  opacity: .6;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .profile__btn-addplace {
+    background-image: url(../../../images/add-btn-big.svg);
+    width: 282px;
+    flex-basis: 50px;
+    justify-self: center;
+    margin: 0;
+  }
+}

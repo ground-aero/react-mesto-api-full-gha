@@ -1,0 +1,12 @@
+.profile__elements-wrap {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  max-width: min(500px, 42vw);
+}
+
+@media (max-width: 767px) {
+  .profile__elements-wrap {
+    padding-bottom: 33px;
+    max-width: min(400px, 74vw);
+  }
+}

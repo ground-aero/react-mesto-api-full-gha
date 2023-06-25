@@ -1,0 +1,12 @@
+.btn {
+  border-radius: 2px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: 1px solid #fff;
+  padding: 0;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+}

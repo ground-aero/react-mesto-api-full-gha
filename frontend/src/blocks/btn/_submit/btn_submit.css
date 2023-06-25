@@ -1,0 +1,22 @@
+.btn_submit {
+    width: 100%;
+    margin: 0;
+    padding: 16px 0 14px;
+    border: none;
+    justify-self: end;
+    transition: opacity 0.4s linear;
+    background-color: #000;
+    color: #fff;
+}
+
+.btn_submit:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+@media (max-width: 767px) {
+    .btn_submit {
+        font-size: 14px;
+        line-height: 17px;
+    }
+}
