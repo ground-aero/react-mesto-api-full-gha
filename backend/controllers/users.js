@@ -76,7 +76,8 @@ const login = (req, res, next) => {
        * чтобы однозначно определить пользователя
        * 3-й необяз параметр — объект опций (список опций описан в док jsonwebtoken): expiresIn. */
       const jwt = jsonwebtoken.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
-      res.cookie('jsonwebtoken', jwt, {
+      res
+        .cookie('jsonwebtoken', jwt, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
         sameSite: true,
