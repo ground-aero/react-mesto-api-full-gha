@@ -22,7 +22,6 @@ import Register from './Register';
 import * as auth from "../utils/auth";
 import {NoMatch} from "./NoMatch";
 
-
 /**
  * @returns {JSX.Element}
  */
@@ -186,8 +185,8 @@ function App() {
             })
     }
 
-    function handleRegister(password, email) {/** @endpoint : /signin - обработчик регистрации.*/
-        return auth.register(password, email)
+    function handleRegister(email, password) {/** @endpoint : /signin - обработчик регистрации.*/
+        return auth.register(email, password)
             .then((res) => {
                 console.log(res)
                 /** {data: {email: "asadfs@dfg.com", _id: "63ee5a01d4567c00131e70f7" }}
@@ -201,17 +200,17 @@ function App() {
                 console.log(`ошибка регистрации: ${err}`)
             })
     }
-
-    function handleLogin(password, email) {/** @end-point: '/signin' */
-        if (!password || !email) {
+/** @param loginData - входные данные {password: string, email: string} */
+    function handleLogin(email, password) { /** @end-point: '/signin' */
+        if (!email || !password) {
             return;
         }
-        return auth.authorize(password, email)
+        return auth.authorize(email, password)
             .then((data) => {
-                console.log(data)/** выдает токен: {token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfa'} */
+                console.log(data) /** выдает токен: {token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfa'} */
                 if (data) {
                     setLoggedIn(true)
-                    localStorage.setItem('token', data.token)
+                    localStorage.setItem('jwt', data.token)
                     setEmail(email)
                     navigate('/', {replace: true});
                 }
@@ -225,20 +224,20 @@ function App() {
 
     function onLogout() {/** Выход из приложения. Удаляем токен */
         setLoggedIn(false);
-        localStorage.removeItem('token');
+        localStorage.removeItem('jwt');
         navigate('/sign-in', {replace: true})
     }
 
     function handleTokenCheck() {
         /** @endpoint: '/users/me' */
-        const jwt = localStorage.getItem('token')
-        if (jwt) {/** есть ли jwt токен в локальном хранилище браузера ? */
-            auth.checkToken(jwt)
+        const token = localStorage.getItem('jwt')
+        if (token) {/** есть ли jwt токен в локальном хранилище браузера ? */
+            auth.checkToken(token)
                 .then((res) => {
-                    console.log(res)
-                    if (res) {
-                        setLoggedIn(true)
+                    // console.log(res)
+                    if (res.data) {
                         setEmail(res.data.email)
+                        setLoggedIn(true)
                         navigate('/', {replace: true}) /** автологин. Чтобы после перезагрузки не выкидывало снова в логин*/
                     }
                 })
@@ -249,6 +248,7 @@ function App() {
     }
 
     useEffect(() => {
+        /** Проверяем токен, получаем email */
         handleTokenCheck()
     }, []);
 

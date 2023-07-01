@@ -75,14 +75,17 @@ const login = (req, res, next) => {
        * Пейлоуд токена — зашифрованный в строку объект пользователя, его достаточно,
        * чтобы однозначно определить пользователя
        * 3-й необяз параметр — объект опций (список опций описан в док jsonwebtoken): expiresIn. */
-      const jwt = jsonwebtoken.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
-      res
-        .cookie('jsonwebtoken', jwt, {
-        maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
-        sameSite: true,
-      });
-      res.send({ user, jwt }); // вернём токен
+      // const token = jsonwebtoken.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+      const token = jsonwebtoken.sign({ _id: user._id }, process.env.NODE_ENV === 'production' ? JWT_SECRET: 'dev-secret', { expiresIn: '7d' });
+      // res
+      //   .cookie('jsonwebtoken', jwt, {
+      //   maxAge: 3600000 * 24 * 7,
+      //   httpOnly: true,
+      //   sameSite: true,
+      // });
+      // res.send({ user, jwt }); // вернём токен
+      // res.status(200).send({ user, token });
+      res.status(200).send({ token });
     })
     .catch(next);
 };
@@ -120,11 +123,12 @@ const getCurrentUser = (req, res, next) => {
   }
   // должны получить токен из authorization хедера:
   let payload;
-  const jwt = authorization.replace('Bearer ', ''); // вырезаем 'Bearer ' из authorization хедера,
+  const token = authorization.replace('Bearer ', ''); // вырезаем 'Bearer ' из authorization хедера,
   // тем самым получаем jwt в чистом виде
   // Проверить, валиден ли токен/jwt:
   try {
-    payload = jsonwebtoken.verify(jwt, 'some-secret-key');
+    // payload = jsonwebtoken.verify(token, 'some-secret-key');
+    payload = jsonwebtoken.verify(token, process.env.NODE_ENV === 'production' ? JWT_SECRET: 'dev-secret');
     // res.send(payload); // в payload хранится: _id, iat,exp
   } catch (err) {
     res.status(401).send({ message: 'Необходима авторизация' });

@@ -12,7 +12,6 @@
 //     }
 // };
 
-export function checkResponse(res) {
-    // проверка ответа
+export function checkResponse(res) { // проверка ответа
     return res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
 }

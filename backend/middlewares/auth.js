@@ -17,12 +17,13 @@ const auth = (req, res, next) => {
   }
 
   /** достать jwt из authorization хедера, удалить Bearer из загол */
-  const jwt = authorization.replace('Bearer ', '');
+  // const token = authorization.replace('Bearer ', '');
+  const token = authorization.split('Bearer ')[1];
   let payload;
 
   try {
-    /** проверить что jwt валидный, с помощью библ jsonwebtoken */
-    payload = jsonwebtoken.verify(jwt, JWT_SECRET);
+    payload = jsonwebtoken.verify(token, process.env.NODE_ENV === 'production' ? JWT_SECRET: 'dev-secret'); /** проверить что jwt валидный,
+     с помощью библ jsonwebtoken */
   } catch (error) {
     throw new AuthoErr('передан неверный логин или пароль -');
   }

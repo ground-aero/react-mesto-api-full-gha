@@ -12,7 +12,17 @@ node_modules
 .npm
 
 # Optional environmental variable (confidential)
+# environments
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# production
+/build
+/storybook-static
+.htaccess
 
 # IDE
 .idea
