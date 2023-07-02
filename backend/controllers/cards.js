@@ -68,7 +68,7 @@ const deleteCard = (req, res, next) => {
 /** поставить лайк карточке
  * @param req, /cards/:cardId/likes , PUT method
  * url: "http://localhost:3000/cards/63f61dfbc7eee15ca4adc16e/likes"
- * @param res
+ * @param res { data: card }
  */
 const likeCard = (req, res, next) => {
   const { cardId } = req.params;

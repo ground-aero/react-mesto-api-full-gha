@@ -49,7 +49,7 @@ export class Api {
     }
 
     /** заменить аватар (PATCH) */
-    patchAvatar(formDataObject) {
+    patchAvatar(formValue) { // вместо formDataObject
         const token = localStorage.getItem('jwt')
         return fetch(`${this._serverUrl}/users/me/avatar`, {
             method: 'PATCH',
@@ -57,7 +57,7 @@ export class Api {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formDataObject)// avatar: formValue.avatar,
+            body: JSON.stringify(formValue)// avatar: formValue.avatar,
         }).then(res => this._onResponse(res))
     }
 
@@ -102,7 +102,7 @@ export class Api {
     changeLikeCardStatus(cardId, isLiked) {
 console.log(isLiked)
     const token = localStorage.getItem('jwt')
-        return fetch(`${this._serverUrl}/cards/likes/${cardId}`, {
+        return fetch(`${this._serverUrl}/cards/${cardId}/likes`, {
             method: isLiked?"DELETE":"PUT",
             headers: {
                 'Authorization': `Bearer ${token}`,

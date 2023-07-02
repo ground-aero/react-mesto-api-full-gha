@@ -118,7 +118,7 @@ function App() {
             .changeLikeCardStatus(card._id, isLiked) // Отправляем запрос в API и получаем обновлённые данные карточки
             .then((newCard) => {
                 setCards((state) =>
-                    state.map((c) => (c._id === card._id ? newCard : c))
+                    state.map((c) => (c._id === card._id ? newCard.data : c))
                 );
             })
             .catch((err) => {
@@ -141,8 +141,8 @@ function App() {
         setIsLoading(true)/** состоянипе для управления текстом кнопки сабмита в каждом попапе: 'Сохранение...' */
 
         api.patchUser(name, about)
-            .then((userData) => {
-                setCurrentUser(userData)
+            .then((updatedUser) => {
+                setCurrentUser(updatedUser.data)
                 closeAllPopups()
             })
             .catch((err) => {
@@ -157,8 +157,8 @@ function App() {
         setIsLoading(true)/** состоянипе для управления текстом кнопки сабмита в каждом попапе: 'Сохранение...' */
 
         api.patchAvatar(link)
-            .then((result) => {
-                setCurrentUser(result)
+            .then((updatedUser) => {
+                setCurrentUser(updatedUser.data) // как в беке
                 closeAllPopups()
             })
             .catch((err) => {
@@ -169,12 +169,13 @@ function App() {
             })
     }
 
+    /** добавл карточки, и обновл стейта cards */
     function handleAddPlaceSubmit(name, link) {
         setIsLoading(true)/** состоянипе для управления текстом кнопки сабмита в каждом попапе: 'Сохранение...' */
 
         api.addNewCard(name, link)
             .then((newCard) => {
-                setCards([newCard, ...cards]);
+                setCards([newCard.data, ...cards]);
                 closeAllPopups()
             })
             .catch((err) => {
