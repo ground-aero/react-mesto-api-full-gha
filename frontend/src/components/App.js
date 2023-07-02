@@ -185,8 +185,8 @@ function App() {
             })
     }
 
-    function handleRegister(email, password) {/** @endpoint : /signin - обработчик регистрации.*/
-        return auth.register(email, password)
+    function handleRegister(password, email) {/** @endpoint : /signin - обработчик регистрации.*/
+        return auth.register(password, email)
             .then((res) => {
                 console.log(res)
                 /** {data: {email: "asadfs@dfg.com", _id: "63ee5a01d4567c00131e70f7" }}
@@ -201,11 +201,11 @@ function App() {
             })
     }
 /** @param loginData - входные данные {password: string, email: string} */
-    function handleLogin(email, password) { /** @end-point: '/signin' */
+    function handleLogin(password, email) { /** @end-point: '/signin' */
         if (!email || !password) {
             return;
         }
-        return auth.authorize(email, password)
+        return auth.authorize(password, email)
             .then((data) => {
                 console.log(data) /** выдает токен: {token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfa'} */
                 if (data) {
@@ -257,8 +257,8 @@ function App() {
             navigate('/')
             Promise.all([api.getUser(), api.getAllCards()])
                 .then(([userData, cardsData]) => {
-                    setCurrentUser(userData);
-                    setCards(cardsData);
+                    setCurrentUser(userData.data); // как в беке
+                    setCards(cardsData.data); // как в беке
                 })
                 .catch((err) => {
                     console.log(`Ошибка данных при загрузке аватара или карточек: ${err}`);

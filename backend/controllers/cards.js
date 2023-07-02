@@ -11,9 +11,9 @@ const BadRequestErr = require('../errors/bad-req-err');
  */
 const createCard = (req, res, next) => {
   const { name, link } = req.body;
-  // const { _id } = req.user._id;
+  const { _id } = req.user;
   return (
-    Card.create({ name, link, owner: req.user._id }) // этот идентифик записыв в поле owner
+    Card.create({ name, link, owner: _id }) // этот идентифик записыв в поле owner
       // при создании новой карточки
       // Вернём записаные в базу данные
       .then((card) => res.status(201).send({ data: card })) // В теле запроса на созд карточки

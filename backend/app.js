@@ -44,7 +44,8 @@ mongoose.connect(MONGO_URL, {
 
 /** 2 */
 // app.use(cors({ origin: 'http://localhost:3000' })); // разрешил кросс-домейн реквесты с этого origin: 3000
-app.use(cors({ origin: ['http://localhost:3000'] }));
+// app.use(cors({ origin: ['http://localhost:3000'] }));
+app.use(cors());
 // app.use(corsAllowed);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // parse application/x-www-form-urlencoded

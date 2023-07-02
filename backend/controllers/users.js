@@ -6,7 +6,8 @@ const User = require('../models/user');
 const BadRequestErr = require('../errors/bad-req-err');
 const ConflictErr = require('../errors/conflict-err');
 const NotFoundErr = require('../errors/not-found-err');
-const { JWT_SECRET } = require('../config');
+const { JWT_SECRET, NODE_ENV } = require('../config');
+// const { JWT_SECRET, NODE_ENV } = process.env;
 // 200 - success; 201 - success, resource created; 400 - not valid data; 401 - not authorised
 // 403 - authorised, no access; 404 - resource not found; 422 - unprocessable entity
 
@@ -76,7 +77,7 @@ const login = (req, res, next) => {
        * чтобы однозначно определить пользователя
        * 3-й необяз параметр — объект опций (список опций описан в док jsonwebtoken): expiresIn. */
       // const token = jsonwebtoken.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
-      const token = jsonwebtoken.sign({ _id: user._id }, process.env.NODE_ENV === 'production' ? JWT_SECRET: 'dev-secret', { expiresIn: '7d' });
+      const token = jsonwebtoken.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET: 'some-secret-key', { expiresIn: '7d' });
       // res
       //   .cookie('jsonwebtoken', jwt, {
       //   maxAge: 3600000 * 24 * 7,

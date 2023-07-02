@@ -9,12 +9,12 @@ function request(url, options) {
 }
 
 /** authentication of user - отправка рег данных - регистрация пользователя */
-export const register = (email, password) => {
+export const register = (password, email) => {
   // console.log(password, email)
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     headers: {
-      Accept: 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
@@ -22,7 +22,7 @@ export const register = (email, password) => {
 };
 
 // проверка на существование пользователя (логинизация)
-export const authorize = (email, password) => {
+export const authorize = (password, email) => {
   // console.log(password, email)
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',

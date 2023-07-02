@@ -20,8 +20,8 @@ function EntryForm({ name, title, textButton, handleSubmit }) {//props из Logi
     }
 
     React.useEffect(() => {
-        setPassword('')
         setEmail('')
+        setPassword('')
     }, [])
 
     /** Обработчик сабмита навешиватся только на тег form с событием submit, а не на кнопку сабмита */

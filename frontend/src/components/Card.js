@@ -6,7 +6,7 @@ function Card({card, onCardClick, onCardLike, onCardDelete}) {
     /** Контекст currentUser */
     const currentUser = React.useContext(CurrentUserContext)
     /** Определяем, являемся ли мы владельцем текущей карточки */
-    const isOwn = card.owner._id === currentUser._id;
+    const isOwner = currentUser._id === card.owner;
     /** Определяем, есть ли у карточки лайк, поставленный текущим пользователем */
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     /** Создаём переменную, которую после зададим в `className` для кнопки лайка */
@@ -30,7 +30,7 @@ function Card({card, onCardClick, onCardLike, onCardDelete}) {
 
     return (
         <li className="card">
-            {isOwn && <button className="card__btn-del opacity-transition" onClick={handleDeleteClick} type="button"
+            {isOwner && <button className="card__btn-del opacity-transition" onClick={handleDeleteClick} type="button"
                               aria-label="delete"/>}
             <img className="card__img" src={ card.link } alt={ card.name } onClick={handleClick}/>
             <div className="card__info-wrap">

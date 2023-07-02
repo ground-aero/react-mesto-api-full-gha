@@ -25,8 +25,8 @@ export class Api {
         return fetch(`${this._serverUrl}/users/me`, {
             method: 'GET',
             headers: {
-                authorization: `Bearer ${token}`,
-                'content-type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
             },
         }).then(res => this._onResponse(res))
     }
@@ -38,8 +38,8 @@ export class Api {
         return fetch(`${this._serverUrl}/users/me`, {
             method: 'PATCH',
             headers: {
-                authorization: `Bearer ${token}`,
-                'content-type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 name: formValue.name,
@@ -54,8 +54,8 @@ export class Api {
         return fetch(`${this._serverUrl}/users/me/avatar`, {
             method: 'PATCH',
             headers: {
-                authorization: `Bearer ${token}`,
-                'content-type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(formDataObject)// avatar: formValue.avatar,
         }).then(res => this._onResponse(res))
@@ -66,7 +66,8 @@ export class Api {
         return fetch(`${this._serverUrl}/cards/`, {
             method: 'GET',
             headers: {
-                authorization: `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
             },
             // headers: this._headers,
         }).then(res => this._onResponse(res))
@@ -77,8 +78,8 @@ export class Api {
         return fetch(`${this._serverUrl}/cards/`, {
             method: 'POST',
             headers: {
-                authorization: `Bearer ${token}`,
-                'content-type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({ name, link }),
         }).then(res => this._onResponse(res))
@@ -90,7 +91,7 @@ export class Api {
         return fetch(`${this._serverUrl}/cards/${cardId}`, {
             method: 'DELETE',
             headers: {
-                authorization: `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
             },
         }).then(res => this._onResponse(res))
     }
@@ -104,8 +105,8 @@ console.log(isLiked)
         return fetch(`${this._serverUrl}/cards/likes/${cardId}`, {
             method: isLiked?"DELETE":"PUT",
             headers: {
-                authorization: `Bearer ${token}`,
-                'content-type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
             },
         }).then(res => this._onResponse(res))
     }
@@ -115,11 +116,11 @@ console.log(isLiked)
 export const apiConfig = {
     // serverUrl: 'https://mesto.nomoreparties.co/v1/cohort-51',
     serverUrl: 'http://localhost:3001',
-    headers: {
-        // "Authorization": "428b584a-5472-4fac-aca2-5c3d80bec64e"
-        authorization: `Bearer ${localStorage.getItem('jwt')}`,
-        'content-type': 'application/json',
-    }
+    // headers: {
+    //     // "Authorization": "428b584a-5472-4fac-aca2-5c3d80bec64e"
+    //     // 'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+    //     'Content-Type': 'application/json',
+    // }
 }
 const api = new Api(apiConfig)
 // const api = new Api({
