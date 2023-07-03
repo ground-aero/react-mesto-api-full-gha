@@ -57,13 +57,15 @@ export class Api {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formValue)// avatar: formValue.avatar,
+            body: JSON.stringify({
+                avatar: formValue
+            }) // avatar: formValue.avatar,
         }).then(res => this._onResponse(res))
     }
 
     getAllCards() {
         const token = localStorage.getItem('jwt')
-        return fetch(`${this._serverUrl}/cards/`, {
+        return fetch(`${this._serverUrl}/cards`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -75,13 +77,16 @@ export class Api {
 
     addNewCard({ name, link }) {
         const token = localStorage.getItem('jwt')
-        return fetch(`${this._serverUrl}/cards/`, {
+        return fetch(`${this._serverUrl}/cards`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name, link }),
+            body: JSON.stringify({
+                name: name,
+                link: link,
+            }),
         }).then(res => this._onResponse(res))
     }
 

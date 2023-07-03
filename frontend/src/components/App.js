@@ -52,7 +52,6 @@ function App() {
 
     const [isSuccessTooltipOpen, setIsSuccessTooltipOpen] = React.useState(false);
     const [isUnsuccessTooltipOpen, setIsUnsuccessTooltipOpen] = React.useState(false);
-
     const [isLoading, setIsLoading] = React.useState(false)/** переменная для отслеживания состояния загрузки во время ожидания ответа от сервера */
 
     /** Открывает всплывающее редактирование аватара */
@@ -153,12 +152,12 @@ function App() {
             })
     }
 
-    function handleUpdateAvatar(link) {
+    function handleUpdateAvatar(formValue) {
         setIsLoading(true)/** состоянипе для управления текстом кнопки сабмита в каждом попапе: 'Сохранение...' */
 
-        api.patchAvatar(link)
-            .then((updatedUser) => {
-                setCurrentUser(updatedUser.data) // как в беке
+        api.patchAvatar(formValue.avatar)
+            .then((updatedAvatar) => {
+                setCurrentUser(updatedAvatar.data) // как в беке
                 closeAllPopups()
             })
             .catch((err) => {
@@ -223,7 +222,7 @@ function App() {
             })
     }
 
-    function onLogout() {/** Выход из приложения. Удаляем токен */
+    function onLogout() { /** Выход из приложения. Удаляем токен */
         setLoggedIn(false);
         localStorage.removeItem('jwt');
         navigate('/sign-in', {replace: true})
@@ -253,13 +252,14 @@ function App() {
         handleTokenCheck()
     }, []);
 
+    /** загрузка на страницу обновленного стейта - данных текущ юзера и карточек */
     useEffect(() => {
         if (loggedIn) {
             navigate('/')
             Promise.all([api.getUser(), api.getAllCards()])
                 .then(([userData, cardsData]) => {
                     setCurrentUser(userData.data); // как в беке
-                    setCards(cardsData.data); // как в беке
+                    setCards(cardsData.data.reverse()); // как в беке
                 })
                 .catch((err) => {
                     console.log(`Ошибка данных при загрузке аватара или карточек: ${err}`);
