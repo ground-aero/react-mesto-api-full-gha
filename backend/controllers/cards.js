@@ -34,7 +34,7 @@ const createCard = (req, res, next) => {
  * @param res
  */
 const getCards = (req, res, next) => Card.find({})
-  .populate(['owner', 'likes']) // достанем поле owner, и поле likes
+  // .populate(['owner', 'likes']) // достанем поле owner, и поле likes
   .then((cards) => res.send({ data: cards })) // res.status(200) по дефолту
   .catch(next);
   // .catch(() => res.status(ERR_CODE_500).send({ message: 'Ошибка по умолчанию' }));

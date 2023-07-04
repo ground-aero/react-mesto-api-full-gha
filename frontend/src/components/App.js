@@ -174,6 +174,7 @@ function App() {
 
         api.addNewCard(name, link)
             .then((newCard) => {
+                // setCards([newCard.data, ...cards]);
                 setCards([newCard.data, ...cards]);
                 closeAllPopups()
             })
@@ -210,7 +211,7 @@ function App() {
                 console.log(data) /** выдает токен: {token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfa'} */
                 if (data) {
                     setLoggedIn(true)
-                    localStorage.setItem('jwt', data.token)
+                    localStorage.setItem('token', data.token)
                     setEmail(email)
                     navigate('/', {replace: true});
                 }
@@ -224,13 +225,14 @@ function App() {
 
     function onLogout() { /** Выход из приложения. Удаляем токен */
         setLoggedIn(false);
-        localStorage.removeItem('jwt');
+        localStorage.removeItem('token');
         navigate('/sign-in', {replace: true})
     }
 
     function handleTokenCheck() {
         /** @endpoint: '/users/me' */
-        const token = localStorage.getItem('jwt')
+        // const token = localStorage.clear()
+        const token = localStorage.getItem('token')
         if (token) {/** есть ли jwt токен в локальном хранилище браузера ? */
             auth.checkToken(token)
                 .then((res) => {

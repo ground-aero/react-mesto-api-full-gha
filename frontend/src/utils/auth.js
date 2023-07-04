@@ -36,7 +36,7 @@ export const authorize = (password, email) => {
       // .then(checkResponse);
       .then(checkResponse)
       .then((data) => {
-        localStorage.setItem('jwt', data.token)
+        localStorage.setItem('token', data.token)
         return data;
       })
 };
@@ -44,7 +44,7 @@ export const authorize = (password, email) => {
 /** отправляем запрос на роут аутентификации */
 export const checkToken = () => {
   // console.log(token)
-  const token = localStorage.getItem('jwt');
+  const token = localStorage.getItem('token');
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {

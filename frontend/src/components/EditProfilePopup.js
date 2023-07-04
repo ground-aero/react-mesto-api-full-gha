@@ -3,7 +3,7 @@ import PopupWithForm from "./PopupWithForm";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
 function EditProfilePopup ({ isOpen, onClose, onUpdateUser, isLoading }) {
-    console.log(isLoading)
+    // console.log(isLoading)
 
     /** Стейт, в котором содержится значение инпута */
     // const [value, setValue] = React.useState('');

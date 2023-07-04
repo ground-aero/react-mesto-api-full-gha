@@ -21,7 +21,7 @@ export class Api {
 
     /** получить данные пользователя (GET) */
     getUser() {
-        const token = localStorage.getItem('jwt')
+        const token = localStorage.getItem('token')
         return fetch(`${this._serverUrl}/users/me`, {
             method: 'GET',
             headers: {
@@ -34,7 +34,7 @@ export class Api {
     /** изменить данные пользователя (PATCH) */
     patchUser(formValue) {
         // console.log(formValue)
-        const token = localStorage.getItem('jwt')
+        const token = localStorage.getItem('token')
         return fetch(`${this._serverUrl}/users/me`, {
             method: 'PATCH',
             headers: {
@@ -50,7 +50,7 @@ export class Api {
 
     /** заменить аватар (PATCH) */
     patchAvatar(formValue) { // вместо formDataObject
-        const token = localStorage.getItem('jwt')
+        const token = localStorage.getItem('token')
         return fetch(`${this._serverUrl}/users/me/avatar`, {
             method: 'PATCH',
             headers: {
@@ -63,20 +63,8 @@ export class Api {
         }).then(res => this._onResponse(res))
     }
 
-    getAllCards() {
-        const token = localStorage.getItem('jwt')
-        return fetch(`${this._serverUrl}/cards`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-            // headers: this._headers,
-        }).then(res => this._onResponse(res))
-    }
-
     addNewCard({ name, link }) {
-        const token = localStorage.getItem('jwt')
+        const token = localStorage.getItem('token')
         return fetch(`${this._serverUrl}/cards`, {
             method: 'POST',
             headers: {
@@ -90,9 +78,21 @@ export class Api {
         }).then(res => this._onResponse(res))
     }
 
+    getAllCards() {
+        const token = localStorage.getItem('token')
+        return fetch(`${this._serverUrl}/cards`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            // headers: this._headers,
+        }).then(res => this._onResponse(res))
+    }
+
     deleteCard(cardId) {
         // console.log(`${this._apiConfig.serverUrl}/cards/${id}`)
-        const token = localStorage.getItem('jwt')
+        const token = localStorage.getItem('token')
         return fetch(`${this._serverUrl}/cards/${cardId}`, {
             method: 'DELETE',
             headers: {
@@ -106,7 +106,7 @@ export class Api {
 /* @returns {Promise<Response>} - объект карточки/ текст ошибки */
     changeLikeCardStatus(cardId, isLiked) {
 console.log(isLiked)
-    const token = localStorage.getItem('jwt')
+    const token = localStorage.getItem('token')
         return fetch(`${this._serverUrl}/cards/${cardId}/likes`, {
             method: isLiked?"DELETE":"PUT",
             headers: {
