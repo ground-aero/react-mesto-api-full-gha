@@ -112,7 +112,7 @@ function App() {
 
     /** ставит/удаляет лайки, @param card - объект карточки */
     function handleCardLike(card) {
-        const isLiked = card.likes.some((i) => i._id === currentUser._id); // Снова проверяем, есть ли уже лайк на этой карточке
+        const isLiked = card.likes.some((i) => i === currentUser._id); // Снова проверяем, есть ли уже лайк на этой карточке
         api
             .changeLikeCardStatus(card._id, isLiked) // Отправляем запрос в API и получаем обновлённые данные карточки
             .then((newCard) => {

@@ -105,10 +105,10 @@ export class Api {
 /* @param cardLiked - boolean, если лайк есть, удаление, нет - установка. /* @param cardID - ID карточки
 /* @returns {Promise<Response>} - объект карточки/ текст ошибки */
     changeLikeCardStatus(cardId, isLiked) {
-console.log(isLiked)
+console.log(cardId, isLiked)
     const token = localStorage.getItem('token')
         return fetch(`${this._serverUrl}/cards/${cardId}/likes`, {
-            method: isLiked?"DELETE":"PUT",
+            method: isLiked ? 'DELETE' : 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
