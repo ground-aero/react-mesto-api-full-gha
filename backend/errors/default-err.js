@@ -1,7 +1,7 @@
 /** базовая ApplicationError */
 class DefaultErr extends Error {
   constructor(message) {
-    super(message); // выз конструктор
+    super(message);
     this.status = 500;
   }
 }

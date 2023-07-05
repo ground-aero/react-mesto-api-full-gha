@@ -1,12 +1,11 @@
 import React from 'react';
 
-function EntryForm({ name, title, textButton, handleSubmit }) {//props из Login, & Register
+function EntryForm({ name, title, textButton, handleSubmit }) { //props из Login, & Register
 
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
     const handleChangeEmail = (e) => {
-        // console.log(email)
         setEmail(e.target.value);
     }
     const handleChangePassword = (e) => {

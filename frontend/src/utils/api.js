@@ -15,8 +15,8 @@ export class Api {
         return fetch(url, options).then(this._onResponse)
     }
 
-    getAllInfo() { //метод ожидает массив промисов - Promise1, Promise2 ...
-        return Promise.all([this.getUser(), this.getAllCards()])//вернет Promise
+    getAllInfo() { // метод ожидает массив промисов - Promise1, Promise2 ...
+        return Promise.all([this.getUser(), this.getAllCards()]) //вернет Promise
     }
 
     /** получить данные пользователя (GET) */
@@ -33,7 +33,6 @@ export class Api {
 
     /** изменить данные пользователя (PATCH) */
     patchUser(formValue) {
-        // console.log(formValue)
         const token = localStorage.getItem('token')
         return fetch(`${this._serverUrl}/users/me`, {
             method: 'PATCH',
@@ -86,7 +85,6 @@ export class Api {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-            // headers: this._headers,
         }).then(res => this._onResponse(res))
     }
 

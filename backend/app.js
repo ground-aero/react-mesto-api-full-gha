@@ -1,6 +1,5 @@
-/** Осн. логика сервера, запуск и подключение к БД */
-/** чтение env-переменных из .env-файла */
-require('dotenv').config();
+/** Осн. логика сервера, запуск и подключение к БД. */
+require('dotenv').config(); // чтение env-переменных из .env-файла
 const express = require('express');
 const mongoose = require('mongoose').default;
 const bodyParser = require('body-parser');
@@ -14,15 +13,9 @@ const {
   ERR_CODE_404,
 } = require('./errors/errors-codes');
 const NotFoundErr = require('./errors/not-found-err');
-/** 1 */
 // берем адрес БД из process.env
 // const { PORT = 3000, DB_ADDRESS = 'mongodb://0.0.0.0:27017/mestodb' } = process.env;
 const { MONGO_URL } = require('./config');
-
-const { PORT = 3001 } = process.env;
-// console.log(process.env);
-const app = express();
-
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 const {
@@ -34,6 +27,9 @@ const auth = require('./middlewares/auth');
 const { loginValidator, createUserValidator } = require('./middlewares/validator');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
+const { PORT = 3001 } = process.env; // на этом порту будет прослушиватель Сервера
+const app = express();
+
 /** подключаемся к серверу mongo */
 mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
@@ -43,8 +39,7 @@ mongoose.connect(MONGO_URL, {
 });
 
 /** 2 */
-// app.use(cors({ origin: 'http://localhost:3000' })); // разрешил кросс-домейн реквесты с этого origin: 3000
-// app.use(cors({ origin: ['http://localhost:3000'] }));
+// app.use(cors({ origin: 'http://localhost:3000' })); // разреш кросс-домейн reqs с origin: 3000
 app.use(cors());
 // app.use(corsAllowed);
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -58,24 +53,22 @@ const limiter = rateLimit({
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
-
 app.use(limiter); // Apply the rate limiting middleware to all requests
 app.use(morgan('dev'));
 
 app.use(requestLogger); // подключаем логгер запросов
-// Краш-тест сервера
-app.get('/crash-test', () => {
+app.get('/crash-test', () => { // Краш-тест сервера
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
-/** 3 Routes which handling requests */
-// обработчики POST-запросов на роуты: '/signin' и '/signup';
+/** 3 Routes which handling requests
+ * обработчики POST-запросов на роуты: '/signin' и '/signup'; */
 app.post('/signup', createUserValidator, createUser);
 app.post('/signin', loginValidator, login);
 
 /** все роуты, кроме /signin и /signup, защищены авторизацией */
-app.use('/users', auth, usersRouter); // запросы в корень будем матчить с путями которые прописали в руте юзеров
+app.use('/users', auth, usersRouter); // запросы в корень матчим с путями которые в руте юзеров
 app.use('/cards', auth, cardsRouter);
 
 app.use(errorLogger); // подключаем логгер ошибок
@@ -84,7 +77,7 @@ app.use(errors()); // обработчик ошибок celebrate
 app.use((req, res, next) => {
   next(new NotFoundErr(ERR_CODE_404));
 });
-/** централизованный обработчик ошибок */
+
 app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({

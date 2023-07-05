@@ -26,7 +26,8 @@ import {NoMatch} from "./NoMatch";
  * @returns {JSX.Element}
  */
 function App() {
-    /** Функция принимает два аргумента: 1 — строка или число. 2 - объект с двумя полями:replace и state. */
+    /** Функция принимает два аргумента: 1 — строка или число.
+     * 2 - объект с двумя полями:replace и state. */
     const navigate = useNavigate();
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
         React.useState(false);
@@ -41,11 +42,10 @@ function App() {
         name: '',
         about: '',
     });
-    /** Состояние массива карточек */
-    const [cards, setCards] = React.useState([]);
+    const [cards, setCards] = React.useState([]); /** Состояние массива карточек */
     /** Состояние выбранной для удаления карточки */
     const [deleteCard, setDeleteCard] = React.useState({_id: ""});
-    /** стейт-перемення loggedIn. Содержит статус пользователя — вошёл в систему или нет */
+    /** стейт-перемення. Содержит статус пользователя */
     const [loggedIn, setLoggedIn] = React.useState(false);
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -57,7 +57,6 @@ function App() {
     /** Открывает всплывающее редактирование аватара */
     function handleEditAvatarClick() {
         setIsEditAvatarPopupOpen(true);
-        // return document.querySelector('#overlay_avatar').classList.add('popup_opened')
     }
     /** Открывает всплывающее редактирование профиля */
     function handleEditProfileClick() {
@@ -72,7 +71,8 @@ function App() {
     }
 
     /** добавляем обработчик Escape:
-     * 1. переменная isOpen снаружи useEffect, в ней следим за всеми состояниями попапов. * Если хоть одно состояние true или не null, то какой-то попап открыт */
+     * 1. переменная isOpen снаружи useEffect, в ней следим за всеми состояниями попапов.
+     * Если хоть одно состояние true или не null, то какой-то попап открыт */
     const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard.link || isSuccessTooltipOpen || isUnsuccessTooltipOpen
     /** значит, навешивать нужно обработчик. */
     /** Объявляем функцию внутри useEffect, чтобы она не теряла свою ссылку при обновлении компонента. */
@@ -91,7 +91,6 @@ function App() {
             }
         }
     }, [isOpen])
-
     /** массив зависимостей c isOpen, чтобы отслеживать изменение этого показателя открытости */
 
     function closeAllPopups() {
@@ -99,11 +98,11 @@ function App() {
         setIsEditProfilePopupOpen(false);
         setIsAddPlacePopupOpen(false);
         setSelectedCard({});
-        setIsSuccessTooltipOpen(false)/** закрытие Всплывашки "Успех регистрации" */
-        setIsUnsuccessTooltipOpen(false)/** закрытие Всплывашки "Ошибка регистрации" */
+        setIsSuccessTooltipOpen(false) /** закрыть всплывашку "Успех регистрации" */
+        setIsUnsuccessTooltipOpen(false) /** закрыть всплывашку "Ошибка регистрации" */
     }
 
-    /** Устанавливает выбранную карточку по нажатию
+    /** Установить выбранную карточку по нажатию
      * @param card */
     function handleCardClick(card) {
         setSelectedCard(card);
@@ -112,9 +111,11 @@ function App() {
 
     /** ставит/удаляет лайки, @param card - объект карточки */
     function handleCardLike(card) {
-        const isLiked = card.likes.some((i) => i === currentUser._id); // Снова проверяем, есть ли уже лайк на этой карточке
+        const isLiked = card.likes.some((i) => i === currentUser._id);
+        // Снова проверяем, есть ли уже лайк на этой карточке
         api
-            .changeLikeCardStatus(card._id, isLiked) // Отправляем запрос в API и получаем обновлённые данные карточки
+            .changeLikeCardStatus(card._id, isLiked)
+            // Отправляем запрос в API и получаем обновлённые данные карточки
             .then((newCard) => {
                 setCards((state) =>
                     state.map((c) => (c._id === card._id ? newCard.data : c))
@@ -137,7 +138,8 @@ function App() {
     }
 
     function handleUpdateUser(name, about) {
-        setIsLoading(true)/** состоянипе для управления текстом кнопки сабмита в каждом попапе: 'Сохранение...' */
+        setIsLoading(true)
+        /** состоянипе для управления текстом кнопки сабмита в каждом попапе: 'Сохранение...' */
 
         api.patchUser(name, about)
             .then((updatedUser) => {
@@ -148,12 +150,14 @@ function App() {
                 console.log(`err при загрузке данных юзера: ${err}`);
             })
             .finally(() => {
-                setIsLoading(false)/** управяем состоянием/текстом кнопки сабмита в попапе */
+                setIsLoading(false)
+                /** управяем состоянием/текстом кнопки сабмита в попапе */
             })
     }
 
     function handleUpdateAvatar(formValue) {
-        setIsLoading(true)/** состоянипе для управления текстом кнопки сабмита в каждом попапе: 'Сохранение...' */
+        setIsLoading(true)
+        /** состоянипе для управления текстом кнопки сабмита в каждом попапе: 'Сохранение...' */
 
         api.patchAvatar(formValue.avatar)
             .then((updatedAvatar) => {
@@ -164,13 +168,14 @@ function App() {
                 console.log(`err при загрузке данных аватара: ${err}`);
             })
             .finally(() => {
-                setIsLoading(false)/** управяем состоянием/текстом кнопки сабмита в попапе */
+                setIsLoading(false) /** управяем состоянием/текстом кнопки сабмита в попапе */
             })
     }
 
     /** добавл карточки, и обновл стейта cards */
     function handleAddPlaceSubmit(name, link) {
-        setIsLoading(true)/** состоянипе для управления текстом кнопки сабмита в каждом попапе: 'Сохранение...' */
+        setIsLoading(true)
+        /** состоянипе для управления текстом кнопки сабмита в каждом попапе: 'Сохранение...' */
 
         api.addNewCard(name, link)
             .then((newCard) => {
@@ -182,16 +187,19 @@ function App() {
                 console.log(`err при отправке нов карточки на сервер: ${err}`);
             })
             .finally(() => {
-                setIsLoading(false)/** управяем состоянием/текстом кнопки сабмита в попапе */
+                setIsLoading(false)
+                /** управяем состоянием/текстом кнопки сабмита в попапе */
             })
     }
 
-    function handleRegister(password, email) {/** @endpoint : /signin - обработчик регистрации.*/
+    /** @endpoint : /signin - обработчик регистрации.*/
+    function handleRegister(password, email) {
         return auth.register(password, email)
             .then((res) => {
                 console.log(res)
                 /** {data: {email: "asadfs@dfg.com", _id: "63ee5a01d4567c00131e70f7" }}
-                 При успешной регистрации второй обработчик then вернёт токен JWT */
+                 * При успешной регистрации второй обработчик then вернёт токен JWT */
+
                 setIsSuccessTooltipOpen(true)
                 navigate('/sign-in', {replace: true});
                 // localStorage.setItem('token', data.token)
@@ -201,14 +209,15 @@ function App() {
                 console.log(`ошибка регистрации: ${err}`)
             })
     }
-/** @param loginData - входные данные {password: string, email: string} */
+    /** @param loginData - входные данные {password: string, email: string} */
     function handleLogin(password, email) { /** @end-point: '/signin' */
         if (!email || !password) {
             return;
         }
         return auth.authorize(password, email)
             .then((data) => {
-                console.log(data) /** выдает токен: {token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfa'} */
+                console.log(data)
+                /** выдает токен: {token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfa'} */
                 if (data) {
                     setLoggedIn(true)
                     localStorage.setItem('token', data.token)
@@ -219,11 +228,12 @@ function App() {
             })
             .catch((err) => {
                 setIsUnsuccessTooltipOpen(true)
-                console.log(`ошибка при логине ${err}`)/** коды: 400 - не передано одно из полей;  401 - пользователь с email не найден  */
+                console.log(`ошибка при логине ${err}`)
+                /** 400 - не передано одно из полей;  401 - пользователь с email не найден  */
             })
     }
 
-    function onLogout() { /** Выход из приложения. Удаляем токен */
+    function onLogout() {
         setLoggedIn(false);
         localStorage.removeItem('token');
         navigate('/sign-in', {replace: true})
@@ -231,14 +241,15 @@ function App() {
 
     function handleTokenCheck(token) {
         /** @endpoint: '/users/me' */
-        if (token) {/** есть ли jwt токен в локальном хранилище браузера ? */
+        if (token) { /** есть ли jwt токен в локальном хранилище браузера ? */
             auth.checkToken(token)
                 .then((res) => {
                     // console.log(res)
                     if (res.data) {
                         setEmail(res.data.email)
                         setLoggedIn(true)
-                        navigate('/', {replace: true}) /** автологин. Чтобы после перезагрузки не выкидывало снова в логин*/
+                        navigate('/', {replace: true})
+                        /** автологин. Чтобы после перезагрузки не выкидывало снова в логин*/
                     }
                 })
                 .catch((err) => {
@@ -280,8 +291,8 @@ function App() {
                 />
 
                 <Routes>
-                    {/* переадресация незалогиненного пользоватея на './sign-in' */}
-                    {/*<Route exact path="/" element={loggedIn ? <Navigate to="/index" /> : <Navigate to="/sign-in" />} />*/}
+                    { /* переадресация незалогиненного пользоватея на './sign-in' */}
+                    { /*<Route exact path="/" element={loggedIn ? <Navigate to="/index" /> : <Navigate to="/sign-in" />} />*/}
                     <Route
                         exact path="/"
                         element={

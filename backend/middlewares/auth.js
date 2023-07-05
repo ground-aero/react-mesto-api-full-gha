@@ -7,13 +7,12 @@ const AuthoErr = require('../errors/autho-err');
 const { JWT_SECRET, NODE_ENV } = require('../config');
 // const { JWT_SECRET, NODE_ENV } = process.env;
 
-/** этот мидлвэр будет вызываться на каждый запрос.
- * должен проверять хедер определенных запросов на наличие авторизации */
+/** мидлвэр будет вызываться на каждый запрос.
+ * проверять хедер определенных запросов на наличие авторизации */
 const auth = (req, res, next) => {
 // ToDo: check token valid, and go next. If (valid) {go next}, else error
   /** взять заголовок authorization */
   const { authorization } = req.headers;
-  // если загол. authorization не передан, или не начин. с Bearer
   if (!authorization || !authorization.startsWith('Bearer ')) {
     throw new AuthoErr('Необходима авторизация *');
   }
@@ -24,14 +23,13 @@ const auth = (req, res, next) => {
   let payload;
 
   try {
-    payload = jsonwebtoken.verify(token, NODE_ENV === 'production' ? JWT_SECRET: 'some-secret-key'); /** проверить что jwt валидный,
-     с помощью библ jsonwebtoken */
+    payload = jsonwebtoken.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key');
+    /** проверить что jwt валидный с помощью библ jsonwebtoken */
   } catch (error) {
     throw new AuthoErr('передан неверный логин или пароль -');
   }
 
-  /** добавить пейлоуд токена в объект запроса юзера ! */
-  req.user = payload; // 3.если все хорошо -> дальше 'go next' (пропустить запрос)
+  req.user = payload; // добавить пейлоуд токена в объект запроса юзера !
   return next();
 };
 

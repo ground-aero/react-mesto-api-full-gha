@@ -1,4 +1,4 @@
-/** директория routes/ для users содержит описание основных роутов для пользователя. */
+/** описание основных роутов для @/users/ (пользователя) */
 const router = require('express').Router();
 const {
   getUsers,
@@ -9,14 +9,13 @@ const {
 } = require('../controllers/users');
 const { userIdValidator, updateProfileValidator, updateAvatarValidator } = require('../middlewares/validator');
 
-/** 'users' можем удалить, роут теперь работает относительно урла, а не всего приложения */
-router.get('/', getUsers); // возвр. всех польз-лей, 'users' можем удалять. 2-й арг. это ф-ция контроллер.
-router.get('/me', getCurrentUser); // возвращает инф о текущем пользователе.
+router.get('/', getUsers); // возвр. всех польз-лей. 2-й арг.- ф-ция контроллер
+router.get('/me', getCurrentUser);
 // в '/me' итак передается authorization header, поэтому не нужно 2-й раз его защищать
 
-router.get('/:userId', userIdValidator, getUserById); // возвращает пользователя по _id. 2-й аргумент -это ф-ция контроллер.
-router.patch('/me', updateProfileValidator, updateProfileInfo); // PATCH /users/me — обновляет профиль */
-router.patch('/me/avatar', updateAvatarValidator, updateAvatar); // PATCH /users/me/avatar — обновляет аватар
+router.get('/:userId', userIdValidator, getUserById); // возвр польз-ля по _id.
+router.patch('/me', updateProfileValidator, updateProfileInfo);
+router.patch('/me/avatar', updateAvatarValidator, updateAvatar);
 
-/** экспортируем сущность которая внутри данного файла. Он отвечает только за юзера (!) */
+/** сущность внутри данного файла отвечает только за юзера (!) */
 module.exports = router;

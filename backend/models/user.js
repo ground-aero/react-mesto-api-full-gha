@@ -1,4 +1,4 @@
-/** директория models/ содержит файлы описания схем пользователя и карточки; */
+/** схема пользователя */
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
@@ -7,7 +7,8 @@ const {
   isURL,
 } = require('../utils/utils');
 
-const userSchema = new mongoose.Schema({ // определить поля для пользователя:
+const userSchema = new mongoose.Schema({
+  // определить поля для пользователя:
   // _id: mongoose.Schema.Types.ObjectId,
   name: {
     type: String,
@@ -50,13 +51,13 @@ const userSchema = new mongoose.Schema({ // определить поля для
   },
 }, { versionKey: false });
 
-/** добавим метод findUserByCredentials схеме пользователя
- * у него будет два параметра — почта и пароль */
+/** добавим метод findUserByCredentials схеме
+ * у него 2 параметра — почта и пароль */
 userSchema.statics.findUserByCredentials = function findUserByCredentials(email, password) {
   // ToDo: 1)пытаемся найти user(-а) по почте
   return this.findOne({ email }).select('+password') // this — это модель User
     .then((user) => {
-      // не нашёлся — отклоняем промис
+      // user не нашёлся — отклоняем промис
       if (!user) {
         return Promise.reject(new AuthoErr('Неправильные почта или пароль..'));
       }

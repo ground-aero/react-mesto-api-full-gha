@@ -10,7 +10,6 @@ function request(url, options) {
 
 /** authentication of user - отправка рег данных - регистрация пользователя */
 export const register = (password, email) => {
-  // console.log(password, email)
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     headers: {
@@ -21,9 +20,8 @@ export const register = (password, email) => {
   }).then(checkResponse);
 };
 
-// проверка на существование пользователя (логинизация)
+/** проверка на существование пользователя (логинизация) */
 export const authorize = (password, email) => {
-  // console.log(password, email)
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers: {
@@ -33,7 +31,6 @@ export const authorize = (password, email) => {
     //   credentials: 'include', // теперь куки посылаются вместе с запросом
     body: JSON.stringify({ email, password }),
   })
-      // .then(checkResponse);
       .then(checkResponse)
       .then((data) => {
         localStorage.setItem('token', data.token)
@@ -43,7 +40,6 @@ export const authorize = (password, email) => {
 
 /** отправляем запрос на роут аутентификации */
 export const checkToken = () => {
-  // console.log(token)
   // const token = localStorage.clear()
   const token = localStorage.getItem('token');
   return fetch(`${BASE_URL}/users/me`, {
@@ -51,7 +47,7 @@ export const checkToken = () => {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      // 'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
+      // 'Authorization': 'Bearer ' + localStorage.getItem('token'),
       'Authorization': `Bearer ${token}`,
     },
     credentials: 'include', // теперь куки посылаются вместе с запросом

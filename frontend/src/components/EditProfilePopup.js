@@ -3,7 +3,6 @@ import PopupWithForm from "./PopupWithForm";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
 function EditProfilePopup ({ isOpen, onClose, onUpdateUser, isLoading }) {
-    // console.log(isLoading)
 
     /** Стейт, в котором содержится значение инпута */
     // const [value, setValue] = React.useState('');
@@ -20,7 +19,7 @@ function EditProfilePopup ({ isOpen, onClose, onUpdateUser, isLoading }) {
     }
 
     function handleSubmit(e) {
-        e.preventDefault();// Запрещаем браузеру переходить по адресу формы
+        e.preventDefault();
         /** Передаём значения управляемых компонентов во внешний обработчик */
         onUpdateUser({
             name,
@@ -33,7 +32,9 @@ function EditProfilePopup ({ isOpen, onClose, onUpdateUser, isLoading }) {
     React.useEffect(() => {
         setName(currentUser.name);
         setAbout(currentUser.about);
-    }, [currentUser, isOpen]); /** следим за isOpen(состоянием открытости), чтобы вставленные в инпуты данные пользователя сохранялись при следующем открытии попапа */
+    }, [currentUser, isOpen]);
+    /** следим за isOpen(состоянием открытости),
+     * чтобы вставленные в инпуты данные пользователя сохранялись при следующем открытии попапа */
 
     return (
         <PopupWithForm

@@ -1,5 +1,4 @@
-/** Контроллер юзера
-/* содержит файлы описания моделей пользователя и карточки; */
+/** Контроллер юзера. содержит файлы описания моделей пользователя и карточки; */
 const jsonwebtoken = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
@@ -32,7 +31,7 @@ const createUser = (req, res, next) => {
         name, about, avatar, email, password: hash,
       },
     ))
-    // и вернем/созд док на осн приш. данных. // Вернём записаные в базу данные
+    // вернем/созд док на осн приш. данных. Вернём записаные в базу данные
     .then((user) => res.status(201).send({
       data: {
         _id: user._id,
@@ -41,7 +40,7 @@ const createUser = (req, res, next) => {
         avatar,
         email,
       },
-    })) // В теле запроса на созд польз
+    }))
     .catch((err) => {
       if (err.code === 11000) {
         return next(new ConflictErr('Такой логин-емейл уже существует! (409)'));
@@ -59,13 +58,13 @@ const createUser = (req, res, next) => {
  */
 const getUsers = (req, res, next) => {
   User.find({})
-    .then((users) => res.send({ data: users })) // res.status(200) добавл по дефолту
+    .then((users) => res.send({ data: users }))
     .catch(next);
 };
 
+/** контроллер login, получает из запроса почту и пароль и проверяет их */
 // POST /auth/local
 // POST /signin
-/** контроллер login, получает из запроса почту и пароль и проверяет их */
 const login = (req, res, next) => {
   const { email, password } = req.body;
   // ToDo: 1)find user, 2)check pass.., 3)return jwt & user
@@ -74,18 +73,9 @@ const login = (req, res, next) => {
       /** библ. jsonwebtoken, вызовом метода .sign создаем токен.
        * Методу sign передаем 2 аргумента: пейлоуд токена и секретный ключ подписи.
        * Пейлоуд токена — зашифрованный в строку объект пользователя, его достаточно,
-       * чтобы однозначно определить пользователя
-       * 3-й необяз параметр — объект опций (список опций описан в док jsonwebtoken): expiresIn. */
+       * чтобы однозначно определить пользователя */
       // const token = jsonwebtoken.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
-      const token = jsonwebtoken.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET: 'some-secret-key', { expiresIn: '7d' });
-      // res
-      //   .cookie('jsonwebtoken', jwt, {
-      //   maxAge: 3600000 * 24 * 7,
-      //   httpOnly: true,
-      //   sameSite: true,
-      // });
-      // res.send({ user, jwt }); // вернём токен
-      // res.status(200).send({ user, token });
+      const token = jsonwebtoken.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key', { expiresIn: '7d' });
       res.status(200).send({ token });
     })
     .catch(next);
@@ -97,19 +87,17 @@ const login = (req, res, next) => {
  */
 const getUserById = (req, res, next) => {
   const { userId } = req.params;
-
   return User.findById(userId)
-    // .orFail() // попадем в orFail, если мы не найдем нашего пользователя
+    // .orFail() // попадем в orFail, если не найдем нашего пользователя
     .then((user) => {
       if (user === null) {
         return next(new NotFoundErr('Пользователь по указанному _id не найден'));
       }
-      return res.send({ data: user }); // res.status(200) добавл по дефолту
+      return res.send({ data: user });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
         return next(new BadRequestErr('Переданы некорректные данные'));
-        // res.status(ERR_CODE_400).send({ message: 'Переданы некорректные данные' });
       }
       return next(err);
     });
@@ -124,12 +112,12 @@ const getCurrentUser = (req, res, next) => {
   }
   // должны получить токен из authorization хедера:
   let payload;
-  const token = authorization.replace('Bearer ', ''); // вырезаем 'Bearer ' из authorization хедера,
-  // тем самым получаем jwt в чистом виде
+  const token = authorization.replace('Bearer ', ''); // вырез 'Bearer ' из authorization хедера,
+  // => получаем jwt в чистом виде
   // Проверить, валиден ли токен/jwt:
   try {
     // payload = jsonwebtoken.verify(token, 'some-secret-key');
-    payload = jsonwebtoken.verify(token, process.env.NODE_ENV === 'production' ? JWT_SECRET: 'dev-secret');
+    payload = jsonwebtoken.verify(token, process.env.NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
     // res.send(payload); // в payload хранится: _id, iat,exp
   } catch (err) {
     res.status(401).send({ message: 'Необходима авторизация' });
@@ -180,7 +168,7 @@ const updateAvatar = (req, res, next) => {
       if (!user) {
         return next(new NotFoundErr('Пользователь с указанным _id не найден'));
       }
-      return res.send({ data: user }); // res.status(200) по дефолту
+      return res.send({ data: user });
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
