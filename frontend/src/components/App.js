@@ -229,10 +229,8 @@ function App() {
         navigate('/sign-in', {replace: true})
     }
 
-    function handleTokenCheck() {
+    function handleTokenCheck(token) {
         /** @endpoint: '/users/me' */
-        // const token = localStorage.clear()
-        const token = localStorage.getItem('token')
         if (token) {/** есть ли jwt токен в локальном хранилище браузера ? */
             auth.checkToken(token)
                 .then((res) => {

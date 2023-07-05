@@ -44,6 +44,7 @@ export const authorize = (password, email) => {
 /** отправляем запрос на роут аутентификации */
 export const checkToken = () => {
   // console.log(token)
+  // const token = localStorage.clear()
   const token = localStorage.getItem('token');
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
