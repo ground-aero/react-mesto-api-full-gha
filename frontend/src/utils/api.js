@@ -118,7 +118,8 @@ console.log(cardId, isLiked)
 
 export const apiConfig = {
     // serverUrl: 'https://mesto.nomoreparties.co/v1/cohort-51',
-    serverUrl: 'http://localhost:3001',
+    // serverUrl: 'http://localhost:3001',
+    serverUrl: 'https://api.ga-mesto.nomoreparties.sbs',
     // headers: {
     //     // "Authorization": "428b584a-5472-4fac-aca2-5c3d80bec64e"
     //     // 'Authorization': `Bearer ${localStorage.getItem('jwt')}`,

@@ -117,7 +117,7 @@ const getCurrentUser = (req, res, next) => {
   // Проверить, валиден ли токен/jwt:
   try {
     // payload = jsonwebtoken.verify(token, 'some-secret-key');
-    payload = jsonwebtoken.verify(token, process.env.NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
+    payload = jsonwebtoken.verify(token, process.env.NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key');
     // res.send(payload); // в payload хранится: _id, iat,exp
   } catch (err) {
     res.status(401).send({ message: 'Необходима авторизация' });

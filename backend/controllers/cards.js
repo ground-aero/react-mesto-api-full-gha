@@ -69,6 +69,7 @@ const likeCard = (req, res, next) => {
   const { cardId } = req.params;
   /** добавить _id польз-ля в массив лайков, если его в нем нет */
   Card.findByIdAndUpdate(cardId, { $addToSet: { likes: req.user._id } }, { new: true })
+    // .populate(['likes,', 'owner'])
     .orFail()
     .then((card) => res.send({ data: card }))
     .catch(() => {

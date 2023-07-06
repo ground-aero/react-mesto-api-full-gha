@@ -1,7 +1,8 @@
 import { checkResponse } from './checkResponse';
 
 // export const BASE_URL = 'https://auth.nomoreparties.co';
-export const BASE_URL = 'http://localhost:3001';
+// export const BASE_URL = 'http://localhost:3001';
+export const BASE_URL = 'https://api.ga-mesto.nomoreparties.sbs';
 
 function request(url, options) {
   // принимает два аргумента: урл и объект опций, как и `fetch`
