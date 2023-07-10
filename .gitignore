@@ -1,5 +1,10 @@
 ToDo.txt
 
+# IDE
+.idea
+.vscode
+*.sublime*
+
 # Logs
 logs
 *.log
@@ -24,7 +29,5 @@ node_modules
 /storybook-static
 .htaccess
 
-# IDE
-.idea
-.vscode
-*.sublime*
+# testing
+/coverage
