@@ -30,6 +30,10 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { PORT = 3001 } = process.env; // на этом порту будет прослушиватель Сервера
 const app = express();
 
+// app.use(cors({ origin: 'http://localhost:3000' })); // разреш кросс-домейн reqs с origin: 3000
+app.use(cors());
+// app.use(corsAllowed);
+
 /** подключаемся к серверу mongo */
 mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
@@ -39,9 +43,6 @@ mongoose.connect(MONGO_URL, {
 });
 
 /** 2 */
-// app.use(cors({ origin: 'http://localhost:3000' })); // разреш кросс-домейн reqs с origin: 3000
-app.use(cors());
-// app.use(corsAllowed);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // parse application/x-www-form-urlencoded
 // app.use(express.json());

@@ -2,9 +2,8 @@
 // const allowedUrl = [
 //   'https://praktikum.tk',
 //   'http://praktikum.tk',
-//   'localhost:3000',
-//   'http://localhost:3000',
-//   'http://127.0.0.1:3000',
+//  'http://api.ga-mesto.nomoreparties.sbs',
+//  'https://api.ga-mesto.nomoreparties.sbs',
 //   'localhost:3001',
 //   'http://localhost:3001',
 //   'http://127.0.0.1:3001',
@@ -12,10 +11,10 @@
 //
 //  module.exports = (req, res, next) => {
 //   const { origin } = req.headers; // Записываем в переменную origin (источник запроса)
-//   соответствующий заголовок
+//   // соответствующий заголовок
 //
 //   if (allowedUrl.includes(origin)) { // Проверяем, что значение origin есть среди
-//   разрешённых доменов
+//   // разрешённых доменов
 //     res.header('Access-Control-Allow-Origin', origin);
 //     res.header('Access-Control-Allow-Credentials', true);
 //   }
