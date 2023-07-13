@@ -1,0 +1,7 @@
+.header__menu {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    color: #fff;
+}

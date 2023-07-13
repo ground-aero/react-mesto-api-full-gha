@@ -1,0 +1,14 @@
+.entry_form {
+    display: flex;
+    flex-direction: column;
+    min-width: 358px;
+    position: relative;
+}
+
+@media (max-width: 767px) {
+    .entry-form {
+        padding-top: 60px;
+        min-width: 260px;
+    }
+}
+

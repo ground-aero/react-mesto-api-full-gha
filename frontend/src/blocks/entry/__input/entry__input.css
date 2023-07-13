@@ -1,0 +1,20 @@
+.entry__input {
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    padding-bottom: 13px;
+    margin-bottom: 30px;
+    background-color: #000000;
+    color: #cccccc;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #cccccc;
+}
+
+.entry__input:-webkit-autofill {
+    background-color: #000000;
+    color: #cccccc;
+}

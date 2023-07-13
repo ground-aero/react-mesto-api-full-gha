@@ -1,0 +1,9 @@
+.popup__subtitle {
+  margin: 0;
+  position: absolute;
+  bottom: -22px;
+  left: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: white;
+}

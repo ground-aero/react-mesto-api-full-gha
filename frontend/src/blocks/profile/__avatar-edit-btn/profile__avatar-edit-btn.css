@@ -1,0 +1,25 @@
+.profile__avatar-edit-btn {
+    height: 120px;
+    width: 120px;
+    position: relative;
+}
+
+.profile__avatar-edit-btn::before {
+    content: '';
+    background-image:  url('../../../images/profile_avatar-edit.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.profile__avatar-edit-btn:hover::before {
+    opacity: 1;
+    cursor: pointer;
+}

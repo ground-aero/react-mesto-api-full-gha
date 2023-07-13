@@ -1,0 +1,10 @@
+.popup__container-img_type_zoomer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 75vw;
+  max-height: 75vh;
+  background-color: transparent;
+  box-sizing: border-box;
+  /* border-radius: 0; */
+}

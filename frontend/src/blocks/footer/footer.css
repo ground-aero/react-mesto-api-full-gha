@@ -1,0 +1,22 @@
+.footer {
+  margin: 0 auto;
+  padding: 67px 0 60px;
+  width: 100%;
+  flex-shrink: 0;
+  /* max-width: 880px; */
+  max-width: calc(880px + 50px * 2);
+  padding-left: 50px;
+  padding-right: 50px;
+  box-sizing: border-box;
+  background-color: #000;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+@media (max-width: 767px) {
+  .footer {
+    padding: 48px 19px 36px;
+  }
+}
