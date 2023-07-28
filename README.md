@@ -5,8 +5,14 @@
 
 Бэкенд расположен в директории `backend/`, а фронтенд - в `frontend/`.
 
-## Адрес репозитория. Ссылки на проект:
+### Requirements specification: [web-link](https://concrete-web-bad.notion.site/15-4a17355b76b54be8b71eabe0ec7645cc)
 
+---
+
+## Адрес репозитория
+https://github.com/ground-aero/react-mesto-api-full-gha
+
+## Ссылки на проект:
 IP-address 158.160.112.89
 
 Frontend https://ga-mesto.nomoreparties.sbs
@@ -31,3 +37,4 @@ BD_CONNECT_URL - строка подкл. к БД MongoDB
 
 2. Выполните `npm run dev` или `npm run start` для запуска сервера;
 3. Проект запустится на локальном сервере по адресу `http://localhost:3001`;
+
