@@ -14,14 +14,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
     minlength: [2, 'Min length of "name" is - 2 symbols'],
-    maxlength: 30,
+    maxlength: [30, 'Max length of "name" is - 30 symbols'],
     default: 'Жак-Ив Кусто',
   },
   about: {
     type: String,
     required: false,
     minlength: [2, 'Min length of "about" is - 2 symbols'],
-    maxlength: 30,
+    maxlength: [30, 'Max length of "about" is - 30 symbols'],
     default: 'Исследователь',
   },
   avatar: {
@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
-    required: [true, 'your "email" is to be filled-in'],
+    required: [true, 'your "email" is required'],
     validate: {
       validator(v) {
         return validator.isEmail(v);
