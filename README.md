@@ -5,7 +5,8 @@
 
 Бэкенд расположен в директории `backend/`, а фронтенд - в `frontend/`.
 
-### Requirements specification: [web-link](https://concrete-web-bad.notion.site/15-4a17355b76b54be8b71eabe0ec7645cc)
+### - Requirements specification: [link](https://concrete-web-bad.notion.site/15-4a17355b76b54be8b71eabe0ec7645cc)
+### - Check-List: [link](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist_15.pdf)
 
 ---
 
@@ -38,5 +39,6 @@ BD_CONNECT_URL - строка подкл. к БД MongoDB
 2. Выполните `npm run dev` или `npm run start` для запуска сервера;
 3. Проект запустится на локальном сервере по адресу `http://localhost:3001`;
 
+---
 #### ToDo:
 - после успешного прохождения ревью удалить краш-тест сервера в app.js
