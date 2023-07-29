@@ -24,7 +24,7 @@ Backend https://api.ga-mesto.nomoreparties.sbs
 --
 ## Запуск:
 
-1. В корне проекта создайте файл `.env`, с содержанием типа:
+1. Создайте на сервере `.env`-файл, с основными переменными окружения:
 ```dotenv
 NODE_ENV=production
 JWT_SECRET_KEY=some-secret-key
@@ -38,3 +38,5 @@ BD_CONNECT_URL - строка подкл. к БД MongoDB
 2. Выполните `npm run dev` или `npm run start` для запуска сервера;
 3. Проект запустится на локальном сервере по адресу `http://localhost:3001`;
 
+#### ToDo:
+- после успешного прохождения ревью удалить краш-тест сервера в app.js
