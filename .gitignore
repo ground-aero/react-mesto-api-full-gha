@@ -1,8 +1,9 @@
-ToDo.txt
+# Исключить файл TODO в корневом каталоге, но не файл в subdir/TODO
+/ToDo.txt
 
 # IDE
-.idea
-.vscode
+.idea/
+.vscode/
 *.sublime*
 
 # Logs
@@ -11,7 +12,7 @@ logs
 npm-debug.log*
 
 # Dependency directory
-node_modules
+node_modules/
 
 # Optional npm cache directory
 .npm
@@ -25,8 +26,11 @@ node_modules
 .env.production.local
 
 # production
-/build
-/storybook-static
+
+# Ignore the build directory
+dist/
+# Игнорировать все файлы в каталоге build/
+frontend/build/
 .htaccess
 
 # testing
