@@ -27,6 +27,13 @@ const auth = require('./middlewares/auth');
 const { loginValidator, createUserValidator } = require('./middlewares/validator');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
 const { PORT = 3001 } = process.env; // на этом порту будет прослушиватель Сервера
 const app = express();
 
@@ -47,17 +54,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // parse application/x-www-form-urlencoded
 // app.use(express.json());
 app.use(helmet()); // защита от некоторых веб-уязвимостей
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
-app.use(limiter); // Apply the rate limiting middleware to all requests
 app.use(morgan('dev'));
-
 app.use(requestLogger); // подключаем логгер запросов
+app.use(limiter); // Apply the rate limiting middleware to all requests
+
 app.get('/crash-test', () => { // Краш-тест сервера
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
