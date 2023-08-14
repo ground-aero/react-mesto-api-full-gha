@@ -19,8 +19,9 @@ import unsucessIcon from '../images/tooltip_unsuccess.svg'
 import {Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
-import * as auth from "../utils/auth";
-import {NoMatch} from "./NoMatch";
+// import * as auth from '../utils/auth';
+import { register, authorize, checkToken } from '../utils/auth';
+import {NoMatch} from './NoMatch';
 
 /**
  * @returns {JSX.Element}
@@ -46,7 +47,8 @@ function App() {
     /** Состояние выбранной для удаления карточки */
     const [deleteCard, setDeleteCard] = React.useState({_id: ""});
     /** стейт-перемення. Содержит статус пользователя */
-    const [loggedIn, setLoggedIn] = React.useState(false);
+    // const [loggedIn, setLoggedIn] = React.useState(false);
+    const [loggedIn, setLoggedIn] = React.useState(localStorage.getItem('loggedIn') === 'true');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
@@ -194,14 +196,14 @@ function App() {
 
     /** @endpoint : /signin - обработчик регистрации.*/
     function handleRegister(password, email) {
-        return auth.register(password, email)
+        return register(password, email)
             .then((res) => {
                 console.log(res)
                 /** {data: {email: "asadfs@dfg.com", _id: "63ee5a01d4567c00131e70f7" }}
                  * При успешной регистрации второй обработчик then вернёт токен JWT */
-
+                setEmail(res.data.email)
                 setIsSuccessTooltipOpen(true)
-                navigate('/sign-in', {replace: true});
+                navigate('/sign-in', {replace: true})
                 // localStorage.setItem('token', data.token)
             })
             .catch((err) => {
@@ -214,14 +216,15 @@ function App() {
         if (!email || !password) {
             return;
         }
-        return auth.authorize(password, email)
+        return authorize(password, email)
             .then((data) => {
                 console.log(data)
                 /** выдает токен: {token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfa'} */
-                if (data) {
-                    setLoggedIn(true)
-                    localStorage.setItem('token', data.token)
-                    setEmail(email)
+                if (data.token) {
+                    localStorage.setItem('token', data.token);
+                    // localStorage.setItem('loggedIn', 'true'); // Store loggedIn state
+                    setLoggedIn(true);
+                    setEmail(email);
                     navigate('/', {replace: true});
                 }
                 // localStorage.setItem('token', data.token);/** сохраняем токен */
@@ -234,18 +237,21 @@ function App() {
     }
 
     function onLogout() {
-        setLoggedIn(false);
         localStorage.removeItem('token');
-        navigate('/sign-in', {replace: true})
+        setEmail(null);
+        setLoggedIn(false);
+        navigate('/sign-in', {replace: true});
     }
 
-    function handleTokenCheck(token) {
-        /** @endpoint: '/users/me' */
+    // Проверить валидность токена
+    function handleTokenCheck(token) { /** @endpoint: '/users/me' */
+        // const token = localStorage.getItem('token');
         if (token) { /** есть ли jwt токен в локальном хранилище браузера ? */
-            auth.checkToken(token)
+        console.log(token)
+        checkToken(token)
                 .then((res) => {
-                    // console.log(res)
-                    if (res.data) {
+                    console.log(res)
+                    if (res) {
                         setEmail(res.data.email)
                         setLoggedIn(true)
                         navigate('/', {replace: true})
@@ -261,7 +267,10 @@ function App() {
     useEffect(() => {
         /** Проверяем токен, получаем email */
         handleTokenCheck()
-    }, []);
+        // console.log(handleTokenCheck())
+        localStorage.setItem('loggedIn', loggedIn.toString())
+        // if (loggedIn)
+    }, [loggedIn]);
 
     /** загрузка на страницу обновленного стейта - данных текущ юзера и карточек */
     useEffect(() => {
@@ -271,6 +280,7 @@ function App() {
                 .then(([userData, cardsData]) => {
                     setCurrentUser(userData.data); // как в беке
                     setCards(cardsData.data.reverse()); // как в беке
+                    setEmail(userData.data.email) // сохраняем стейт юзер-емейла в хедере
                 })
                 .catch((err) => {
                     console.log(`Ошибка данных при загрузке аватара или карточек: ${err}`);
@@ -279,7 +289,6 @@ function App() {
             navigate('/sign-up')
         }
     }, [loggedIn]);
-
 
     return (
         <div className="page__container">

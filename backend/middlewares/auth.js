@@ -18,10 +18,11 @@ const auth = (req, res, next) => {
   }
 
   /** достать jwt из authorization хедера, удалить Bearer из загол */
-  // const token = authorization.replace('Bearer ', '');
-  const token = authorization.split('Bearer ')[1];
+  const token = authorization.replace('Bearer ', '');
+  // const token = authorization.split('Bearer ')[1];
   let payload;
 
+  /** Верификация jwt по секретному ключу */
   try {
     payload = jsonwebtoken.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key');
     /** проверить что jwt валидный с помощью библ jsonwebtoken */

@@ -3,6 +3,7 @@ import {Link, Route} from 'react-router-dom';
 import React from "react";
 
 function Header(props) {
+    // console.log(props.email)
     const [currentUrl, setCurrentUrl] = React.useState('');
 
     function chgUrl() {
