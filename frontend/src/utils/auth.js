@@ -1,8 +1,11 @@
-import { checkResponse } from './checkResponse';
-
 // export const BASE_URL = 'https://auth.nomoreparties.co';
 // export const BASE_URL = 'http://localhost:3001';
-export const BASE_URL = 'https://api.ga-mesto.nomoreparties.sbs';
+export const BASE_URL = 'https://api.mesto-react.tech';
+
+function checkResponse(res) {
+  // проверка ответа
+  return res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
+}
 
 function request(url, options) {
   // принимает два аргумента: урл и объект опций, как и `fetch`
@@ -46,12 +49,12 @@ export const checkToken = () => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': 'application/json',
       // 'Authorization': 'Bearer ' + localStorage.getItem('token'),
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
-    credentials: 'include', // теперь куки посылаются вместе с запросом
-  })
-      .then(checkResponse);
+    credentials: 'include', // включить отправку авторизационных данных в fetch 
+    // теперь куки посылаются вместе с запросом
+  }).then(checkResponse);
 };

@@ -247,15 +247,14 @@ function App() {
     function handleTokenCheck(token) { /** @endpoint: '/users/me' */
         // const token = localStorage.getItem('token');
         if (token) { /** есть ли jwt токен в локальном хранилище браузера ? */
-        console.log(token)
         checkToken(token)
                 .then((res) => {
+                    /** автологин. Чтобы после перезагрузки не выкидывало снова в логин*/
                     console.log(res)
                     if (res) {
                         setEmail(res.data.email)
                         setLoggedIn(true)
                         navigate('/', {replace: true})
-                        /** автологин. Чтобы после перезагрузки не выкидывало снова в логин*/
                     }
                 })
                 .catch((err) => {
@@ -264,10 +263,9 @@ function App() {
         }
     }
 
-    useEffect(() => {
-        /** Проверяем токен, получаем email */
+    useEffect(() => { /** Проверяем токен, получаем email */
         handleTokenCheck()
-        // console.log(handleTokenCheck())
+        // console.log(handleTokenCheck()) // дает undefined ?!!!
         localStorage.setItem('loggedIn', loggedIn.toString())
         // if (loggedIn)
     }, [loggedIn]);
@@ -308,14 +306,14 @@ function App() {
                             <ProtectedRoute
                                 loggedIn={loggedIn}
                                 element={Main}
-                                onEditAvatar={handleEditAvatarClick}
-                                onEditProfile={handleEditProfileClick}
-                                onAddPlace={handleAddPlaceClick}
-
                                 cards={cards}
                                 onCardClick={handleCardClick}
                                 onCardLike={handleCardLike} //лайк/дизлайк
                                 onCardDelete={handleCardDelete}
+
+                                onEditAvatar={handleEditAvatarClick}
+                                onEditProfile={handleEditProfileClick}
+                                onAddPlace={handleAddPlaceClick}
                             />}
                     />
 

@@ -14,8 +14,8 @@ const { JWT_SECRET, NODE_ENV } = require('../config');
  * Добавление пользователя без обяз поля avatar - body: { name, about, avatar }
  * @return {Promise}
  * */
-// front: POST /auth/local/register
 // back: POST /signup
+// front: POST /auth/local/register
 const createUser = (req, res, next) => {
   const {
     name,
@@ -62,7 +62,7 @@ const getUsers = (req, res, next) => {
     .catch(next);
 };
 
-/** контроллер login, получает из запроса почту и пароль и проверяет их */
+/** контроллер login, проверяет переданные в теле почту и пароль и возвращает JWT */
 // POST /auth/local
 // POST /signin
 const login = (req, res, next) => {

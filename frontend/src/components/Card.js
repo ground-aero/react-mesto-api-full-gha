@@ -3,6 +3,7 @@ import CurrentUserContext from "../contexts/CurrentUserContext";
 
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 
+console.log(card)
     /** Контекст currentUser */
     const currentUser = React.useContext(CurrentUserContext)
     /** Определяем, являемся ли мы владельцем текущей карточки */

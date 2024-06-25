@@ -15,6 +15,7 @@ const {
 const NotFoundErr = require('./errors/not-found-err');
 // берем адрес БД из process.env
 // const { PORT = 3000, DB_ADDRESS = 'mongodb://0.0.0.0:27017/mestodb' } = process.env;
+// console.log(process.env.NODE_ENV); // production
 const { MONGO_URL } = require('./config');
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
@@ -44,10 +45,10 @@ app.use(cors());
 /** подключаемся к серверу mongo */
 mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
-  // useCreateIndex: true,
-  // useFindAndModify: true,
   useUnifiedTopology: true,
-});
+})
+  .then(() => console.log(`подключились к БД: ${MONGO_URL} \n`))
+  .catch((err) => console.log('Ошибка подключения к базе данных: ', err.message));
 
 /** 2 */
 app.use(bodyParser.urlencoded({ extended: true }));
