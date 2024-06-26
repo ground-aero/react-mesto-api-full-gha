@@ -58,4 +58,3 @@ BD_CONNECT_URL - строка подкл. к БД MongoDB
 
 ##### *ToDo:*
 - удалить краш-тест сервера в app.js
-[![Статус тестов](../../actions/workflows/tests.yml/badge.svg)](../../actions/workflows/tests.yml)
