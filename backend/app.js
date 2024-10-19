@@ -38,9 +38,15 @@ const limiter = rateLimit({
 const { PORT = 3001 } = process.env; // на этом порту будет прослушиватель Сервера
 const app = express();
 
-// app.use(cors({ origin: 'http://localhost:3000' })); // разреш кросс-домейн reqs с origin: 3000
-app.use(cors());
+const corsOptions = {
+  origin: ['https://mesto-react.tech', 'http://localhost:3000', 'http://localhost:3001'],
+  optionsSuccessStatus: 200, // для поддержки старых браузеров
+  credentials: true, // если запросы содержат куки или авторизационные заголовки
+};
+
+app.use(cors(corsOptions));
 // app.use(corsAllowed);
+app.options('*', cors(corsOptions)); // обработка preflight запросов для всех маршрутов
 
 /** подключаемся к серверу mongo */
 mongoose.connect(MONGO_URL, {
